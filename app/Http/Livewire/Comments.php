@@ -23,6 +23,7 @@ class Comments extends Component
         ]);
 
         $this->newComment ="" ;
+        //comment
     }
 
     public $newComment;
