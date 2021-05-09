@@ -31,6 +31,12 @@ class Comments extends Component
         //comment
     }
 
+    public function remove($commentId){
+        $comment = Comment::find($commentId);
+        $comment->delete();
+        $this->comments = $this->comments->except($commentId);
+    }
+
     public function mount(){
 
         //fetch comments from db 
