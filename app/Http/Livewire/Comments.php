@@ -5,10 +5,12 @@ namespace App\Http\Livewire;
 use App\Comment;
 use Carbon\Carbon;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Comments extends Component
 {
-    public $comments;
+    //prevents reloading of when moving from page to page 
+    use WithPagination;
 
     public $newComment;
 
@@ -24,8 +26,7 @@ class Comments extends Component
         //create 
         $createdComment = Comment::create(['body' => $this->newComment, 'user_id'=>1]);
 
-        //push new comment to array
-        $this->comments->prepend($createdComment);
+        
        
             //empty comment inout form 
         $this->newComment ="" ;
@@ -37,7 +38,7 @@ class Comments extends Component
     public function remove($commentId){
         $comment = Comment::find($commentId);
         $comment->delete();
-        $this->comments = $this->comments->except($commentId);
+        
         session()->flash('message', 'Comment deleted successfully');
     }
 
@@ -54,6 +55,8 @@ class Comments extends Component
     
     public function render()
     {
-        return view('livewire.comments');
+        return view('livewire.comments', [
+            'comments' => Comment::latest()->paginate(2)
+        ]);
     }
 }
