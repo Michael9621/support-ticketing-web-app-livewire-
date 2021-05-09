@@ -27,14 +27,18 @@ class Comments extends Component
         //push new comment to array
         $this->comments->prepend($createdComment);
        
+            //empty comment inout form 
         $this->newComment ="" ;
-        //comment
+        
+        //flash session message
+        session()->flash('message', 'Comment added successfully');
     }
 
     public function remove($commentId){
         $comment = Comment::find($commentId);
         $comment->delete();
         $this->comments = $this->comments->except($commentId);
+        session()->flash('message', 'Comment deleted successfully');
     }
 
     public function mount(){
