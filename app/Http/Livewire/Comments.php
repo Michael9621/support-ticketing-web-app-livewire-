@@ -2,18 +2,13 @@
 
 namespace App\Http\Livewire;
 
+use App\Comment;
 use Carbon\Carbon;
 use Livewire\Component;
 
 class Comments extends Component
 {
-    public $comments = [
-        [
-            'body'=> 'hello test',
-            'created_at' => '3 min ago',
-            'creator' => 'Mich haio'
-        ]
-    ];
+    public $comments;
 
     public $newComment;
 
@@ -22,14 +17,23 @@ class Comments extends Component
         if($this->newComment == ''){
             return;
         }
-        array_unshift($this->comments, [
-            'body' => $this->newComment,
-            'created_at' => Carbon::now()->diffForHumans(),
-            'creator' => 'James'
-        ]);
 
+        //create 
+        $createdComment = Comment::create(['body' => $this->newComment, 'user_id'=>1]);
+
+        //push new comment to array
+        $this->comments->prepend($createdComment);
+       
         $this->newComment ="" ;
         //comment
+    }
+
+    public function mount(){
+
+        //fetch comments from db 
+        //get the latest comment
+        $initialComments = Comment::latest()->get();
+        $this->comments = $initialComments;
     }
 
     
