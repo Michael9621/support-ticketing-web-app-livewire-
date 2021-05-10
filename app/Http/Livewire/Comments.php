@@ -14,6 +14,14 @@ class Comments extends Component
 
     public $newComment;
 
+    public $image;
+
+    protected $listeners = ['fileUpload' => 'handleFileUpload'];
+
+    public function handleFileUpload($imageData){
+        $this->image = $imageData;
+    }
+
     public function updated($field){
         $this->validateOnly($field, ['newComment' => 'required|max:255']);
     }
