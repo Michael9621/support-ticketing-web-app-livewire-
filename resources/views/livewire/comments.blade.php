@@ -41,6 +41,9 @@
                     <i class="fa fa-times text-red-200 hover:text-red-600 cursor-pointer" wire:click="remove({{$comment->id}})" ></i>
                 
                 </div>
+                @if($comment->image)
+                    <img src="{{$comment->imagePath}}" >
+                @endif
                 <p class="text-gray-800">{{$comment->body}}</p>
             </div>
             @endforeach
