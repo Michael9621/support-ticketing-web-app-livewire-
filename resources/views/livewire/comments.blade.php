@@ -18,6 +18,7 @@
                
                 @if($image)
                     <img src={{$image}} width="200" />
+                    <br>
                 @endif
 
                 <input type="file" id="image" wire:change="$emit('fileChoosen')">
